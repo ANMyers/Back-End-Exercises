@@ -1,0 +1,1 @@
+This was a code along for introduction into [django](http://www.django-rest-framework.org/)

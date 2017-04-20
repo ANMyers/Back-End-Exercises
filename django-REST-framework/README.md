@@ -1,0 +1,1 @@
+This was a code along demonstration an application created with django's [tutorial](http://www.django-rest-framework.org/tutorial/quickstart/)
