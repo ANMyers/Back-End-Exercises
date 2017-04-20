@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/Tavern/workspace/python/exercises/Music History ERD/musichistory.db"/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2792"/><expanded_item id="0" parent="-1"/><expanded_item id="1" parent="-1"/><expanded_item id="2" parent="-1"/><expanded_item id="3" parent="-1"/></tab_structure><tab_browse><current_table name="Album"/><default_encoding codec=""/><browsetable_info data="AAAABQAAAB4AcwBxAGwAaQB0AGUAXwBzAGUAcQB1AGUAbgBjAGUAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAACABTAG8AbgBnAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAoARwBlAG4AcgBlAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAwAQQByAHQAaQBzAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAACgBBAGwAYgB1AG0AAAAAAAAAAAAAAAAAAAAAAAAAAAD/////"/></tab_browse><tab_sql><sql name="queries.sql">
+--select * from Genre;
+
+--insert into Artist values (null, 'Iron Maiden', 1983);
+
+--insert into Album values (null, </sql><current_tab id="0"/></tab_sql></sqlb_project>

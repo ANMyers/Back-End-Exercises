@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/Tavern/workspace/python/exercises/Music History ERD/music-history-erd-file.db"/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1813"/><expanded_item id="0" parent="-1"/><expanded_item id="3" parent="0"/><expanded_item id="1" parent="-1"/><expanded_item id="2" parent="-1"/><expanded_item id="3" parent="-1"/></tab_structure><tab_browse><current_table name="Song"/><default_encoding codec=""/><browsetable_info data="AAAABAAAAAgAUwBvAG4AZwAAAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAKAEcAZQBuAHIAZQAAAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAUAEEAbABiAHUAbQBHAGUAbgByAGUAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAACgBBAGwAYgB1AG0AAAAAAAAAAAAAAAAAAAAAAAAAAAD/////"/></tab_browse><tab_sql><sql name="SQL 1">DELETE FROM AlbumArtist;
+DELETE FROM AlbumGenre;
+DELETE FROM AlbumSong;
+DELETE FROM SongArtist;
+DELETE FROM Album;
+DELETE FROM Artist;
+DELETE FROM Song;
+
+DROP TABLE IF EXISTS AlbumArtist;
+DROP TABLE IF EXISTS AlbumGenre;
+DROP TABLE IF EXISTS AlbumSong;
+DROP TABLE IF EXISTS SongArtist;
+DROP TABLE IF EXISTS Album;
+DROP TABLE IF EXISTS Artist;
+DROP TABLE IF EXISTS Song;
+
+CREATE TABLE Genre (
+	GenreId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NOT NULL
+);
+
+insert into Genre values (null, 'Rock');
+insert into Genre values (null, 'Pop');
+insert into Genre values (null, 'Alternative');
+
+--SELECT * FROM Genre;
+
+CREATE TABLE Artist (
+	ArtistId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NOT NULL
+);
+
+insert into Artist values (null, 'Nickelback');
+insert into Artist values (null, 'Iron Maiden');
+insert into Artist values (null, 'Beethoven');
+
+--SELECT * FROM Artist;
+
+CREATE TABLE Song (
+	SongId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NOT NULL
+);
+
+insert into Song values (null, 'The Trooper');
+insert into Song values (null, 'Photograph');
+insert into Song values (null, '5th Symphony');
+
+--SELECT * FROM Song;
+
+CREATE TABLE Album (
+	AlbumId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT NOT NULL
+);
+
+insert into Album values (null, &quot;Beethoven's Greatest Hits&quot;);
+insert into Album values (null, &quot;Nickelback's Greatest Hits&quot;);
+insert into Album values (null, &quot;Iron Maiden's Greatest Hits&quot;);
+
+--SELECT * FROM Album;
+
+CREATE TABLE AlbumGenre (
+	AlbumGenreId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	AlbumId INTEGER NOT NULL,
+	GenreId INTEGER NOT NULL,
+	FOREIGN KEY (GenreId) REFERENCES Genre(GenreId),
+	FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId)
+);
+
+insert into AlbumGenre 
+select null, a.AlbumId, g.GenreId
+from Album a, Genre g 
+where a.Name = &quot;Iron Maiden's Greatest Hits&quot; 
+and g.Name = 'Rock';
+
+insert into AlbumGenre 
+select null, a.AlbumId, g.GenreId
+from Album a, Genre g 
+where a.Name = &quot;Nickelback's Greatest Hits&quot; 
+and g.Name = 'Alternative';
+
+insert into AlbumGenre 
+select null, a.AlbumId, g.GenreId
+from Album a, Genre g 
+where a.Name = &quot;Beethoven's Greatest Hits&quot; 
+and g.Name = 'Pop';
+
+--SELECT * FROM AlbumGenre;
+
+CREATE TABLE AlbumArtist (
+	AlbumArtistId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ArtistId INTEGER NOT NULL,
+	AlbumId INTEGER NOT NULL,
+	FOREIGN KEY (ArtistId) REFERENCES Artist(ArtistId),
+	FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId)
+);
+
+insert into AlbumArtist 
+select null, a.AlbumId, ar.ArtistId
+from Album a, Artist ar
+where a.Name = &quot;Nickelback's Greatest Hits&quot; 
+and ar.Name = 'Nickelback';
+
+insert into AlbumArtist 
+select null, a.AlbumId, ar.ArtistId
+from Album a, Artist ar
+where a.Name = &quot;Beethoven's Greatest Hits&quot; 
+and ar.Name = 'Beethoven';
+
+insert into AlbumArtist
+select null, a.AlbumId, ar.ArtistId
+from Album a, Artist ar 
+where a.Name = &quot;Iron Maiden's Greatest Hits&quot; 
+and ar.Name = 'Iron Maiden';
+
+--SELECT * FROM AlbumArtist;
+
+CREATE TABLE AlbumSong (
+	AlbumSongId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	SongId INTEGER NOT NULL,
+	AlbumId INTEGER NOT NULL,
+	Featured INTEGER NOT NULL,
+	FOREIGN KEY (SongId) REFERENCES Song(SongId),
+	FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId)
+);
+
+insert into AlbumSong 
+select null, a.AlbumId, s.SongId, 0
+from Album a, Song s
+where a.Name = &quot;Nickelback's Greatest Hits&quot; 
+and s.Name = 'Photograph';
+
+insert into AlbumSong 
+select null, a.AlbumId, s.SongId, 0
+from Album a, Song s
+where a.Name = &quot;Beethoven's Greatest Hits&quot; 
+and s.Name = '5th Symphony';
+
+insert into AlbumSong
+select null, a.AlbumId, s.SongId, 0
+from Album a, Song s 
+where a.Name = &quot;Iron Maiden's Greatest Hits&quot; 
+and s.Name = 'The Trooper';
+
+--SELECT * FROM AlbumGenre;
+
+CREATE TABLE SongArtist (
+	SongArtistId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	ArtistId INTEGER NOT NULL,
+	SongId INTEGER NOT NULL,
+	Featured INTEGER NOT NULL,
+	FOREIGN KEY (ArtistId) REFERENCES Artist(ArtistId),
+	FOREIGN KEY (SongId) REFERENCES Song(SongId)
+);
+
+insert into SongArtist 
+select null, s.SongId, a.ArtistId, 0
+from Song s, Artist a
+where s.Name = &quot;Photograph&quot; 
+and a.Name = 'Nickelback';
+
+insert into SongArtist 
+select null, s.SongId, a.ArtistId, 0
+from Song s, Artist a
+where s.Name = &quot;5th Symphony&quot; 
+and a.Name = 'Beethoven';
+
+insert into SongArtist
+select null, s.SongId, a.ArtistId, 0
+from Song s, Artist a 
+where s.Name = &quot;The Trooper&quot; 
+and a.Name = 'Iron Maiden';
+
+--SELECT * FROM SongArtist;</sql><current_tab id="0"/></tab_sql></sqlb_project>
